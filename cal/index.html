@@ -6,19 +6,30 @@
         <link rel="stylesheet" href="cal.css">
 
         <style>
-        body {
-            font-family: "Montserrat", sans-serif;
-        }
+            body {
+                font-family: "Montserrat", sans-serif;
+            }
         </style>
     </head>
 
     <body>
-        <div class="cal"></div>
+        <div id="calendar-demo"></div>
 
         <script
             src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
             crossorigin="anonymous"></script>
         <script src="cal.js"></script>
+
+        <script>
+            var calendar = new Calendar(new Date(), function(date) {
+                console.log("Selected date: ", date);
+            });
+
+            var $calendarDemo = $("#calendar-demo");
+            $calendarDemo.append(calendar.getElement());
+
+            calendar.updateSize();
+        </script>
     </body>
 </html>

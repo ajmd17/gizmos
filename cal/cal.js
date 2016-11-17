@@ -6,34 +6,60 @@ var MONTH_NAMES = [
     "July", "August", "September", "October", "November", "December"
 ];
 
-function getDaysInMonth(year, month) {
-    return new Date(year, month + 1, 0).getDate();
-}
+function Calendar(date, dateChangedCallback) {
+    this.date = date;
+    this.dateChangedCallback = dateChangedCallback;
 
-function updateCalSize($cal) {
-    var calWidth = $cal.width();
-    var eltSize = (calWidth / 7);
+    var $banner = $("<div>")
+        .addClass("banner");    
+    var $weekdays = $("<ul>")
+        .addClass("weekdays");
 
-    var $weekdays = $cal.find(".weekdays");
-    var $days = $cal.find(".days");
-
-    $weekdays.find("li").css("width", eltSize.toString() + "px");
-    $days.find("li").css({
-        "width" : eltSize.toString() + "px",
-        "height": eltSize.toString() + "px",
-        "line-height": eltSize.toString() + "px"
+    WEEKDAY_NAMES.forEach(function(element) {
+        $weekdays.append($("<li>")
+            .append(element));
     });
+
+    var $weekdaysWrapper = $("<div>")
+        .addClass("weekdays-wrapper")
+        .append($weekdays);
+    var $daysWrapper = $("<div>")
+        .addClass("days-wrapper")
+        .append($("<div>")
+            .addClass("days"));
+
+    this.$calendarElement = $("<div>")
+        .addClass("cal")
+        .append($banner)
+        .append($weekdaysWrapper)
+        .append($daysWrapper);
+
+    (function(calendar) {
+        $(window).resize(function() {
+            calendar.updateSize();
+        });
+    })(this);
+    
+    this.updateData();
 }
 
-function updateCalData($cal, date) {
-    $cal[0].selectedDate = date;
+Calendar.prototype.getDate = function() {
+    return this.date;
+};
 
+Calendar.prototype.getElement = function() {
+    return this.$calendarElement;
+};
+
+Calendar.prototype.updateData = function() {
+    var calendar   = this;
+    var $cal       = this.$calendarElement;
     var $banner    = $cal.find(".banner");
     var $weekdays  = $cal.find(".weekdays");
     var $days      = $cal.find(".days");
 
-    var year  = date.getFullYear();
-    var month = date.getMonth();
+    var year  = this.date.getFullYear();
+    var month = this.date.getMonth();
 
     var firstDay    = new Date(year, month, 1);
     var startingDay = firstDay.getDay();
@@ -55,33 +81,33 @@ function updateCalData($cal, date) {
             .addClass("month-back")
             .click(function() {
                 // go back a month
-                var newDate = $cal[0].selectedDate;
+                var newDate = calendar.date;
                 var day = newDate.getDate();
                 var daysInMonth = getDaysInMonth(newDate.getFullYear(), newDate.getMonth() - 1);
                 if (day > daysInMonth) {
                     newDate.setDate(daysInMonth);
                 }
                 newDate.setMonth(newDate.getMonth() - 1);
-                updateCalData($cal, newDate);
-                updateCalSize($cal);
+                calendar.updateData();
+                calendar.updateSize();
             }));
         $banner.append($("<div>")
-            .append(MONTH_NAMES[$cal[0].selectedDate.getMonth()])
-            .append(" " + $cal[0].selectedDate.getFullYear().toString()));
+            .append(MONTH_NAMES[calendar.date.getMonth()])
+            .append(" " + calendar.date.getFullYear().toString()));
         $banner.append($("<div>")
-        .append("<i class=\"fa fa-chevron-right\">")
+            .append("<i class=\"fa fa-chevron-right\">")
             .addClass("month-forward")
             .click(function() {
                 // go forward a month
-                var newDate = $cal[0].selectedDate;
+                var newDate = calendar.date;
                 var day = newDate.getDate();
                 var daysInMonth = getDaysInMonth(newDate.getFullYear(), newDate.getMonth() + 1);
                 if (day > daysInMonth) {
                     newDate.setDate(daysInMonth);
                 }
                 newDate.setMonth(newDate.getMonth() + 1);
-                updateCalData($cal, newDate);
-                updateCalSize($cal);
+                calendar.updateData();
+                calendar.updateSize();
             }));
     }
     
@@ -96,7 +122,7 @@ function updateCalData($cal, date) {
     for (var i = 0; i <= counter; i++) {
         $dayElement = $("<li>");
 
-        atEnd = i == counter;
+        atEnd = (i == counter);
 
         if (i % 7 == 0 || atEnd) {
             if ($weekElement != null) {
@@ -117,15 +143,20 @@ function updateCalData($cal, date) {
                         .append(day.toString())
                         .click(function() {
                             // set new day, but do not re-create element.
-                            if ($cal[0].selectedDate.getDate() != day) {
-                                $cal[0].selectedDate.setDate(day);
+                            if (calendar.date.getDate() != day) {
+                                calendar.date.setDate(day);
 
                                 $(".day").removeClass("active");
                                 $(this).addClass("active");
+
+                                // trigger callback because we are not calling updateData()
+                                if (calendar.dateChangedCallback != undefined) {
+                                    calendar.dateChangedCallback(calendar.date);
+                                }
                             }
                         });
 
-                    if ($cal[0].selectedDate.getDate() == day) {
+                    if (calendar.date.getDate() == day) {
                         $elt.addClass("active");
                     }
 
@@ -142,50 +173,26 @@ function updateCalData($cal, date) {
             $weekElement.append($dayElement);
         }
     }
+
+    if (this.dateChangedCallback != undefined) {
+        this.dateChangedCallback(this.date);
+    }
+};
+
+Calendar.prototype.updateSize = function() {
+    var eltSize   = this.$calendarElement.width() / 7;
+    var $days     = this.$calendarElement.find(".days");
+    var $weekdays = this.$calendarElement.find(".weekdays");
+
+    $weekdays.find("li").css("width", eltSize.toString() + "px");
+    $days.find("li").css({
+        "width" : eltSize.toString() + "px",
+        "height": eltSize.toString() + "px",
+        "line-height": eltSize.toString() + "px"
+    });
+};
+
+function getDaysInMonth(year, month) {
+    return new Date(year, month + 1, 0).getDate();
 }
-
-
-$(document).ready(function() {
-    $(".cal").each(function() {
-        this.getSelectedDate = function() {
-            return this.selectedDate;
-        };
-
-        var $this = $(this);
-
-        var $banner = $("<div>")
-            .addClass("banner");
-        
-        var $weekdays = $("<ul>")
-            .addClass("weekdays");
-
-        WEEKDAY_NAMES.forEach(function(element) {
-            $weekdays.append($("<li>")
-                .append(element));
-        });
-
-        var $weekdaysWrapper = $("<div>")
-            .addClass("weekdays-wrapper")
-            .append($weekdays);
-
-        var $daysWrapper = $("<div>")
-            .addClass("days-wrapper")
-            .append($("<div>")
-                .addClass("days"));
-
-        $this.html("");
-        $this.append($banner)
-             .append($weekdaysWrapper)
-             .append($daysWrapper);
-
-        updateCalData($this, new Date());
-        updateCalSize($this);
-    });
-
-    $(window).resize(function() {
-        $(".cal").each(function() {
-            updateCalSize($(this));
-        });
-    });
-});
 
