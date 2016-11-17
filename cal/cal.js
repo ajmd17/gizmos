@@ -39,8 +39,6 @@ function updateCalData($cal, date) {
     var startingDay = firstDay.getDay();
     var daysInMonth = getDaysInMonth(year, month);
 
-    console.log("# days in : ", month, daysInMonth);
-
     // day of the month to be output
     var dayNumber = 1;
     var counter = 0;
