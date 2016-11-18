@@ -62,7 +62,9 @@
     position: absolute;
     left: 50%;
     top : 50%;
-    transform: translateX(-50%) translateY(-50%);
+    /*transform: translateX(-50%) translateY(-50%);*/
+    transform-origin: center bottom;
+    transform: translateX(-50%) translateY(-50%) rotate(220deg); 
     margin-top: -65px;
     width: 6px;
     height: 130px;

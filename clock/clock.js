@@ -41,9 +41,9 @@ Clock.prototype.updateData = function() {
         .addClass("clock-controls")
         .append($("<div>")
             .addClass("hours-hand")
-            .css({
+            /*.css({
                 "transform": "rotate(" + 260 + "deg) translateX(" + (halfWidth - 130) + "px) translateY(" + (halfWidth - 130) + "px)"
-            }))
+            })*/)
         .append($("<div>")
             .addClass("minutes-hand"))
         .append($("<div>")
