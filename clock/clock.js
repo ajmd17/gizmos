@@ -74,10 +74,6 @@ function Clock(date, timeChangedCallback) {
 
     this.$clockElement.append($("<div>")
         .addClass("clock-controls")
-        /*.append($("<div>")
-            .addClass("hours-hand"))
-        .append($("<div>")
-            .addClass("center-cap"))*/
         .append($("<div>")
             .addClass("selected-time"))
         .append($("<div>")
@@ -85,7 +81,14 @@ function Clock(date, timeChangedCallback) {
             .append($am)
             .append($pm)));
 
+    (function(clock) {
+        $(window).resize(function() {
+            clock.updateSize();
+        });
+    })(this);
+
     this.updateData();
+    this.updateSize();
 }
 
 Clock.prototype.getHours = function() {
@@ -100,9 +103,73 @@ Clock.prototype.getElement = function() {
     return this.$clockElement;
 };
 
+Clock.prototype.updateSize = function() {
+    var clock      = this;
+    var width      = clock.$clockElement.width() || parseInt(clock.$clockElement.css("width"));
+    var halfWidth  = width / 2;
+    var degStep    = 0;
+    var degCounter = 0;
+
+    this.$clockElement.css({
+        "height": width.toString() + "px"
+    });
+
+    var timeFontSize = 34;
+    var ampmFontSize = 16;
+    var hourSize     = 50;
+    var hourFontSize = 32;
+
+    if (width >= 400) {
+        timeFontSize  = 50;
+        hourSize      = 50;
+        hourFontSize  = 32;
+        ampmFontSize  = 20;
+    } else if (width > 300) {
+        timeFontSize  = 34;
+        hourSize      = 40;
+        hourFontSize  = 26;
+        ampmFontSize  = 20;
+    } else {
+        timeFontSize  = 28;
+        hourSize      = 30;
+        hourFontSize  = 18;
+        ampmFontSize  = 16;
+    }
+
+    this.$clockElement.find(".hour").css({
+        "font-size"  : hourFontSize.toString() + "px",
+        "margin"     : (-hourSize / 2).toString() + "px",
+        "width"      : hourSize.toString() + "px",
+        "height"     : hourSize.toString() + "px",
+        "line-height": hourSize.toString() + "px"
+    });
+
+    this.$clockElement.find(".am-pm div").css({
+        "font-size"  : ampmFontSize.toString() + "px",
+        "width"      : hourSize.toString() + "px",
+        "height"     : hourSize.toString() + "px",
+        "line-height": hourSize.toString() + "px"
+    });
+
+    this.$clockElement.find(".selected-time").css({
+        "font-size": timeFontSize.toString() + "px"
+    });
+
+    var $hours = this.$clockElement.find(".hour-labels").find(".hour");
+    if ($hours != undefined && $hours.length > 0) {
+        degStep = 360 / $hours.length;
+        $hours.each(function() {
+            $(this).css({
+                "transform": "rotate(" + degCounter + "deg) translate(" + (halfWidth - hourSize + 10) + "px) rotate(" + (-1 * degCounter) + "deg)"
+            });
+            degCounter += degStep;
+        });
+    }
+};
+
 Clock.prototype.updateData = function() {
     var clock      = this;
-    var width      = 300;
+    var width      = this.$clockElement.width();
     var halfWidth  = width / 2;
     var degStep    = 360 / 12;
     var degCounter = 0;
@@ -149,11 +216,6 @@ Clock.prototype.updateData = function() {
                     clock.$clockElement.find(".hour").removeClass("active");
                     $(this).addClass("active");
 
-                    // rotate hour hand to face this
-                    clock.$clockElement.find(".hours-hand").css({
-                        "transform": "translateX(-50%) translateY(-50%) rotate(" + deg.toString() + "deg)"
-                    });
-
                     clock.$clockElement.find(".hour-labels").animate({
                         "opacity": 0
                     }, 500, function() {
@@ -174,6 +236,7 @@ Clock.prototype.updateData = function() {
                             // set clock pick mode to minute
                             clock.pickingMode = ClockPickMode.MINUTE;
                             clock.updateData();
+                            clock.updateSize();
                         } else if (clock.pickingMode == ClockPickMode.MINUTE) {
                             // set clock.date's minutes
                             clock.date.setMinutes(itemMinute);
@@ -186,6 +249,7 @@ Clock.prototype.updateData = function() {
                             // go back to hour mode
                             clock.pickingMode = ClockPickMode.HOUR;
                             clock.updateData();
+                            clock.updateSize();
                         }
                     });
                 });
