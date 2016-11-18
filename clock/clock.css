@@ -8,6 +8,8 @@
     border-radius: 50%;
     max-width : 500px;
     max-height: 500px;
+    min-width : 175px;
+    min-height: 175px;
     border: 8px solid #C8D0D9;
     box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
 }
@@ -136,7 +138,6 @@
 .clock .am-pm a {
     color: #FFF;
 }
-
 .clock .selected-time {
     font-size: 34px;
     color: #FFF;
