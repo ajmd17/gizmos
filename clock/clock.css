@@ -1,0 +1,88 @@
+.clock {
+    position: relative;
+    /*background-color: #3E454D;*/
+    background: rgb(88,97,107); /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, rgba(88,97,107,1) 0%, rgba(41,46,51,1) 99%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(88,97,107,1) 0%,rgba(41,46,51,1) 99%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, rgba(88,97,107,1) 0%,rgba(41,46,51,1) 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    border-radius: 50%;
+    width : 300px;
+    height: 300px;
+    border: 8px solid #C8D0D9;
+    box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+}
+.clock ul {
+    list-style: none;
+    overflow  : hidden;
+    box-sizing: content-box;
+    padding: 0;
+    margin : 0;
+    overflow: hidden;
+}
+.clock li {
+    font-size: 24px;
+    color: #FFF;
+    display: block;
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    width : 20px;
+    height: 20px;
+    margin: -10px;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    vertical-align: middle;
+    line-height: 20px;
+    -moz-user-select   : none;
+    -webkit-user-select: none;
+    -ms-user-select    : none;
+    user-select        : none;
+    cursor: default;
+}
+.clock-controls {
+}
+.clock .hours-hand {
+    position: absolute;
+    left: 50%;
+    top : 50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin-top: -45px;
+    width: 10px;
+    height: 90px;
+    background-color: #7C8A99;
+    -webkit-border-top-left-radius: 40px;
+    -webkit-border-top-right-radius: 40px;
+    -moz-border-radius-topleft: 40px;
+    -moz-border-radius-topright: 40px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.5);
+}
+.clock .minutes-hand {
+    position: absolute;
+    left: 50%;
+    top : 50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin-top: -65px;
+    width: 6px;
+    height: 130px;
+    background-color: #C8D0D9;
+    -webkit-border-top-left-radius: 40px;
+    -webkit-border-top-right-radius: 40px;
+    -moz-border-radius-topleft: 40px;
+    -moz-border-radius-topright: 40px;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5);
+}
+.clock .center-cap {
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width : 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #C8D0D9;
+    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.5);
+}
