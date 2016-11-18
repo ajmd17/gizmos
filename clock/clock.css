@@ -102,19 +102,24 @@
     border-radius: 50%;
     background-color: #C8D0D9;
 }
-.clock .am-pm {
+.clock .clock-controls {
     position: absolute;
     top : 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-    margin-top: 45px;
+}
+.clock .am-pm {
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
     font-size: 20px;
     color: #FFF;
     background-color: #748DA8;
     border-radius: 6px;
     box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+    margin-top: 12px;
 }
-
 .clock .am-pm > div {
     border-radius: 50%;
     height: 40px;
@@ -130,4 +135,16 @@
 }
 .clock .am-pm a {
     color: #FFF;
+}
+
+.clock .selected-time {
+    font-size: 34px;
+    color: #FFF;
+    text-align: center;
+    -moz-user-select   : none;
+    -webkit-user-select: none;
+    -ms-user-select    : none;
+    user-select        : none;
+    cursor: default;
+    text-shadow: 1px 2px 8px rgba(0, 0, 0, 0.3);
 }

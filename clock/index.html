@@ -23,7 +23,18 @@
         <script src="clock.js"></script>
 
         <script>
-            var clock = new Clock(new Date(), function(date) {
+            var clock = new Clock(new Date(), function(date, mode) {
+                var hour   = date.getHours();
+                var minute = date.getMinutes();
+
+                switch (mode) {
+                case ClockPickMode.HOUR:
+                    console.log("got hour: ", hour);
+                    break;
+                case ClockPickMode.MINUTE:
+                    console.log("got minute", minute);
+                    break;
+                }
             });
 
             var $clockDemo = $("#clock-demo");
