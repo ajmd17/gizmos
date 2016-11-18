@@ -7,7 +7,12 @@ var MONTH_NAMES = [
 ];
 
 function Calendar(date, dateChangedCallback) {
-    this.date = date;
+    if (date != undefined) {
+        this.date = date;
+    } else {
+        this.date = new Date();
+    }
+    
     this.dateChangedCallback = dateChangedCallback;
 
     var $banner = $("<div>")
@@ -53,6 +58,7 @@ Calendar.prototype.getElement = function() {
 
 Calendar.prototype.updateData = function() {
     var calendar   = this;
+    
     var $cal       = this.$calendarElement;
     var $banner    = $cal.find(".banner");
     var $weekdays  = $cal.find(".weekdays");
@@ -163,10 +169,14 @@ Calendar.prototype.updateData = function() {
                     $dayElement.append($elt);
                 })(dayNumber++);
             } else if (i < startingDay) {
-                $dayElement.append(new Date(year, month, -1 * (startingDay - i) + 1).getDate())
+                $dayElement.append($("<div>")
+                    .append(new Date(year, month, -1 * (startingDay - i) + 1).getDate())
+                        .addClass("day"))
                     .addClass("next-month");
             } else if (dayNumber > daysInMonth) {
-                $dayElement.append(new Date(year, month, dayNumber++).getDate())
+                $dayElement.append($("<div>")
+                    .append(new Date(year, month, dayNumber++).getDate())
+                        .addClass("day"))
                     .addClass("next-month");
             }
 
@@ -195,4 +205,3 @@ Calendar.prototype.updateSize = function() {
 function getDaysInMonth(year, month) {
     return new Date(year, month + 1, 0).getDate();
 }
-

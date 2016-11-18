@@ -3,7 +3,7 @@
     overflow: hidden;
     box-sizing: border-box;
     border: 1px solid #F3F3F3;
-    border-radius: 4px;
+    border-radius: 8px;
     background-color: #FFFFFF;
     max-width: 750px;
 }
@@ -16,7 +16,7 @@
     margin: 0;
     padding: 6px 0;
     text-align: center;
-    font-size: 26px;
+    font-size: 22px;
     color: #FFFFFF;
     background-color: #3E454D;
 
@@ -85,11 +85,11 @@
     background-color: #D7DFF0 !important;
     color: #748DA8;
 }
-.next-month {
+.cal .next-month {
     background-color: #EBF0FA !important;
     color: #86898F !important;
 }
-.active {
+.cal .active {
     background-color: #FE8067 !important;
 }
 .cal .month-back {
@@ -101,4 +101,16 @@
     float: right;
     padding: 0 8px;
     cursor: pointer;
+}
+
+@media (max-width: 450px) {
+    .cal .banner {
+        font-size: 18px;
+    }
+    .cal .weekdays li {
+        font-size: 12px;
+    }
+    .cal .week li {
+        font-size: 14px;
+    }
 }

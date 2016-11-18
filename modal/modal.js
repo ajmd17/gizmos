@@ -74,7 +74,7 @@ Modal.prototype.show = function() {
     this.$modalWindowElement.animate({
         "opacity": 1
     }, 200);
-}
+};
 
 Modal.prototype.hide = function() {
     $(".modal-background-blurred").css("filter", "");
@@ -92,4 +92,4 @@ Modal.prototype.hide = function() {
     }, 200, function() {
         $(this).remove();
     });
-}
+};
