@@ -20,51 +20,67 @@
     overflow: hidden;
 }
 .clock li {
-    font-size: 24px;
-    color: #FFF;
     display: block;
     position: absolute;
     top : 50%;
     left: 50%;
-    width : 20px;
-    height: 20px;
-    margin: -10px;
+    width : 40px;
+    height: 40px;
+    margin: -20px;
     text-align: center;
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
     vertical-align: middle;
-    line-height: 20px;
+    line-height: 40px;
     -moz-user-select   : none;
     -webkit-user-select: none;
     -ms-user-select    : none;
     user-select        : none;
     cursor: default;
 }
-.clock-controls {
+.clock .hour {
+    border-radius: 50%;
+    font-size: 24px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.clock a {
+    text-decoration: none;
+    color: #FFF;
+}
+.clock .hour:not(.active):hover {
+    background-color: #D7DFF0 !important;
+}
+.clock .hour:not(.active):hover a {
+    color: #748DA8;
+}
+.clock .active {
+    background-color: #FE8067 !important;
+    z-index: 2;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 }
 .clock .hours-hand {
     position: absolute;
     left: 50%;
     top : 50%;
+    transform-origin: center bottom;
     transform: translateX(-50%) translateY(-50%);
-    margin-top: -45px;
-    width: 10px;
-    height: 90px;
-    background-color: #7C8A99;
+    margin-top: -70px;
+    width: 4px;
+    height: 140px;
+    background-color: #C8D0D9;
     -webkit-border-top-left-radius: 40px;
     -webkit-border-top-right-radius: 40px;
     -moz-border-radius-topleft: 40px;
     -moz-border-radius-topright: 40px;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
-    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.5);
+    z-index: 1;
 }
 .clock .minutes-hand {
     position: absolute;
     left: 50%;
     top : 50%;
-    /*transform: translateX(-50%) translateY(-50%);*/
     transform-origin: center bottom;
-    transform: translateX(-50%) translateY(-50%) rotate(220deg); 
+    transform: translateX(-50%) translateY(-50%);
     margin-top: -65px;
     width: 6px;
     height: 130px;
@@ -75,7 +91,6 @@
     -moz-border-radius-topright: 40px;
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
-    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.5);
 }
 .clock .center-cap {
     position: absolute;
@@ -86,5 +101,33 @@
     height: 16px;
     border-radius: 50%;
     background-color: #C8D0D9;
-    box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.5);
+}
+.clock .am-pm {
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    margin-top: 45px;
+    font-size: 20px;
+    color: #FFF;
+    background-color: #748DA8;
+    border-radius: 6px;
+    box-shadow: 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.clock .am-pm > div {
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 40px;
+    margin: 4px;
+}
+.clock .am-pm > div .active {
+    background-color: #FE8067;
+}
+.clock .am-pm a {
+    color: #FFF;
 }
