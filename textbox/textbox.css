@@ -1,0 +1,16 @@
+.textbox {
+    font-family: "Montserrat", sans-serif;
+    font-size: 22px;
+    color: #464646;
+    border-width: 0;
+    border-bottom: 2px solid #D0D0D0;
+    outline: none;
+    transition: border 0.5s ease;
+    margin: 4px 8px;
+    width: 100%;
+    min-width: 40px;
+    max-width: 225px;
+}
+.textbox:focus {
+    border-bottom: 2px solid #2DB2EA;
+}

@@ -3,7 +3,6 @@
     overflow: hidden;
     padding: 0;
     border-radius: 8px;
-    min-width : 250px;
     min-height: 100px;
 
     color: #3E454D;
@@ -34,10 +33,6 @@
 }
 .tooltip .banner div {
     display: inline-block;
-}
-.tooltip h3 {
-    padding: 0;
-    margin : 0;
 }
 .tooltip hr {
     margin: 4px 0;

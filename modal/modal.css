@@ -4,7 +4,7 @@
     padding: 0;
     border-radius: 8px;
 
-    min-width: 450px;
+    width: 550px;
     max-height: 700px;
 
     color: #646464;
@@ -42,7 +42,7 @@
     height: 40px;
 }
 .modal-title {
-    font-size: 22px;
+    font-size: 20px;
     line-height: 40px;
     margin: 0;
     text-align: center;
@@ -55,11 +55,17 @@
     user-select        : none;
     cursor: default;
 }
-.modal-bottom {
+.modal .bottom {
+    position: relative;
+    overflow: hidden;
     clear: both;
-    height: 45px;
-    border-top: 1px solid rgb(230, 230, 230);
-    background-color: rgb(240, 240, 240);
+    height: 100%;
+    min-height: 45px;
+    padding: 4px;
+}
+.modal .bottom .buttons {
+    margin: 0 auto;
+    display: table;
 }
 
 @media (max-width: 600px) {

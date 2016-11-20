@@ -4,43 +4,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-        <link rel="stylesheet" href="../btn/btn.css">
-        <link rel="stylesheet" href="modal.css">
-
+        <link rel="stylesheet" href="textbox.css">
         <style>
             body {
-                padding: 0;
-                margin: 0;
                 font-family: "Montserrat", sans-serif;
             }
         </style>
     </head>
 
     <body>
+        <div id="textbox-demo">
+        </div>
+
         <script
             src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
             crossorigin="anonymous"></script>
-        <script src="modal.js"></script>
+        
+        <script src="textbox.js"></script>
 
         <script>
-            var modal = new Modal("Modal Demo", "This is a modal demo", [
-                {
-                    text: "OK",
-                    type: "primary",
-                    click: function() {
-                        modal.hide();
-                    }
-                },
-                {
-                    text: "Cancel",
-                    click: function() {
-                        modal.hide();
-                    }
-                }
-            ]);
+            $(function() {
+                var textbox = new Textbox("Textbox demo", {
 
-            modal.show();
+                });
+
+                $("#textbox-demo").append(textbox.getElement());
+            });
         </script>
     </body>
 </html>

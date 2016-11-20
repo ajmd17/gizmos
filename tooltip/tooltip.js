@@ -1,7 +1,13 @@
-function Tooltip($element, title, content) {
+function Tooltip($element, title, content, callbacks) {
     this.title   = title;
     this.content = content;
     this.showing = false;
+
+    if (callbacks !== undefined) {
+        this.callbacks = callbacks;
+    } else {
+        this.callbacks = {};
+    }
 
     var tooltip = this;
 
@@ -11,8 +17,7 @@ function Tooltip($element, title, content) {
     if (this.title != "") {
         $tooltipContent.append($("<div>")
                 .addClass("banner")
-                .append($("<h3>")
-                .append(title)));
+                .append(title));
     }
     
     $tooltipContent.append($("<div>")
@@ -23,7 +28,7 @@ function Tooltip($element, title, content) {
         .addClass("tooltip-wrapper")
         .css({
             "position": "fixed",
-            "z-index" : "500",
+            "z-index" : "1000",
             "opacity" : 0
         })
         .append($tooltipContent)
@@ -36,10 +41,10 @@ function Tooltip($element, title, content) {
         });
 
     $element.click(function(e) {
-        e.stopPropagation();
         if (!tooltip.showing) {
             tooltip.show($(this));
         } else {
+            e.preventDefault();
             tooltip.$tooltipElement.animate({
                 "opacity": 0
             }, 300, function() {
@@ -74,9 +79,17 @@ Tooltip.prototype.show = function(element) {
     $body.append(this.$tooltipElement);
     this.$tooltipElement.attr("tabindex", -1).focus();
     this.showing = true;
+
+    if (this.callbacks.show !== undefined) {
+        this.callbacks.show();
+    }
 };
 
 Tooltip.prototype.hide = function() {
     this.$tooltipElement.detach();
     this.showing = false;
+
+    if (this.callbacks.hide !== undefined) {
+        this.callbacks.hide();
+    }
 };
